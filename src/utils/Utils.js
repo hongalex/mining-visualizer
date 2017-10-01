@@ -1,13 +1,29 @@
 import CryptoJS from 'crypto-js';
+import { conf } from '../config.js';
 
 export function calculateHash(input) {
-	// Calculate initial
-	var firstHash = CryptoJS.SHA256(input);
-	
-	// Perform a second hash on the binary data of the first hash
-	var secondHash = CryptoJS.SHA256(firstHash);
+	var hash;
 
-	return secondHash;
+	switch(conf.hashFunction) 
+	{
+		case 'Double-SHA256':
+			// Calculate initial
+			hash = CryptoJS.SHA256(input);
+			
+			// Perform a second hash on the binary data of the first hash
+			hash = CryptoJS.SHA256(hash);
+			break;
+		case 'SHA256':
+			hash = CryptoJS.SHA256(input);
+			break;
+		case 'SHA3':
+			hash = CryptoJS.SHA3(input);
+			break;
+		default: 
+			hash = CryptoJS.SHA512(input);
+	} 
+
+	return hash;
 }
 
 /**
@@ -39,7 +55,7 @@ export function isValidSolution(hash, difficulty)
 export function mineBlock(blockNumber, prevHash, data, time) {
 	var result = {}
 	
-	var nonce = 0;
+	var nonce = conf.initialNonce;
 
 	var input;
 	
@@ -48,7 +64,7 @@ export function mineBlock(blockNumber, prevHash, data, time) {
 		input = blockNumber.toString() + prevHash.toString() + time + data.toString() + nonce.toString();
 		hash = calculateHash(input);
 		nonce+=1;
-	} while(!isValidSolution(hash.toString(), 4));
+	} while(!isValidSolution(hash.toString(), conf.difficulty));
 
 	result.hash = hash.toString();
 	result.nonce = nonce;

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import moment from 'moment';
 
 import './App.css';
-import * as Utils from '../utils/Utils'
+import * as Utils from '../utils/Utils';
+import { conf } from '../config.js';
 
 import Blockchain from './Blockchain';
 
@@ -13,7 +14,7 @@ class App extends Component {
 		/* Mine Genesis Block */
 		var blockNumber = 0;
 		var prevHash = 0;
-		var data = 'Genesis Block';
+		var data = conf.initData;
 		var time = moment();
 
 		// Contains calculated hash solution and nonce
@@ -66,7 +67,7 @@ class App extends Component {
 		return (
 			<div className="App">
 				<header className="App-header">
-					<h1 className="App-title">This is a blockchain mining demo</h1>
+					<h1 className="App-title">Simple Blockchain Mining Demo</h1>
 				</header>
 
 				<p className="App-intro">

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Block extends Component {
 	render() {
 		return (
-			<table className="table table-bordered">
+			<table className="table table-bordered table-striped">
 				<caption>
 					Block Number: {this.props.blockNumber}
 				</caption>
