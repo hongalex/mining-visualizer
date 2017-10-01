@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
-import * as Utils from '../utils/Utils'
+import Block from './Block';
 
 class Blockchain extends Component {
-	constructor(props) {
-		super(props);
 
-		this.state = {
-			size: 0
-		}
-	}
 	render() {
 		return (
 			<div>
-				
+				{this.props.blocks.map(function(block) {
+					return <Block {...block} key={block.blockNumber}/>
+				})}
 			</div>
 		);
 	}
