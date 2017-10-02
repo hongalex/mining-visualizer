@@ -25,9 +25,9 @@ class App extends Component {
 					<h1 className="App-title">Simple Blockchain Mining Demo</h1>
 				</header>
 
-				<p className="App-intro">
+				<h1 className="App-intro">
 					To get started, press give some data as input and hit "Mine New Block"
-				</p>
+				</h1>
 
 				<form className="form-inline" onSubmit={e => { e.preventDefault(); this.refs.blockchain.createBlock() }}>
 					<div className="form-group">
