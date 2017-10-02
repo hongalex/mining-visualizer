@@ -7,9 +7,8 @@ export function calculateHash(input) {
 	switch(conf.hashFunction) 
 	{
 		case 'Double-SHA256':
-			// Calculate initial
+			// Calculate initial hash
 			hash = CryptoJS.SHA256(input);
-			
 			// Perform a second hash on the binary data of the first hash
 			hash = CryptoJS.SHA256(hash);
 			break;
@@ -52,9 +51,9 @@ export function isValidSolution(hash, difficulty)
  * @param  {Number} time - UNIX time in seconds
  * @return {Object} result - containing hash solution & nonce
  */
-export function mineBlock(blockNumber, prevHash, data, time, callback) {
+export function mineBlock(blockNumber, prevHash, data, time) {
 	var result = {}
-	
+
 	var nonce = conf.initialNonce;
 	var input;
 	var hash;

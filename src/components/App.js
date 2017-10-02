@@ -29,11 +29,11 @@ class App extends Component {
 					To get started, press give some data as input and hit "Mine New Block"
 				</p>
 
-				<form className="form-inline" onSubmit={e => { e.preventDefault(); this.refs.blockchain.submitBlock() }}>
+				<form className="form-inline" onSubmit={e => { e.preventDefault(); this.refs.blockchain.createBlock() }}>
 					<div className="form-group">
 						<input type="text" className="form-control" name="blockData" placeholder="Data" value={this.state.blockData} onChange={this.updateBlockData} />
 					</div>
-					<button className="btn btn-primary" onClick={() => this.refs.blockchain.submitBlock()} type="button">
+					<button className="btn btn-primary" onClick={() => this.refs.blockchain.createBlock()} type="button">
 						Mine New Block&nbsp;
 						<img src={pick} height="20" width="20" alt=""/>
 					</button>
