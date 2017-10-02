@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import moment from 'moment';
 
 import './App.css';
-import * as Utils from '../utils/Utils';
-import { conf } from '../config.js';
+import pick from '../img/pick.png';
 
 import Blockchain from './Blockchain';
 
@@ -11,56 +9,13 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 
-		/* Mine Genesis Block */
-		var blockNumber = 0;
-		var prevHash = 0;
-		var data = conf.initData;
-		var time = moment();
-
-		// Contains calculated hash solution and nonce
-		var result = Utils.mineBlock(blockNumber, prevHash, data, time);
-
 		this.state = {
-			blockData: '',
-			blocks: [
-				{ 
-					blockNumber: blockNumber,
-					hash: result.hash,
-					prevHash: prevHash,
-					data: data,
-					nonce: result.nonce,
-					timestamp: time.format()
-				}
-			]
+			blockData: ''
 		}
 	};
 
 	updateBlockData = (event) => {		
 		this.setState({blockData: event.target.value})
-	};
-
-	submitBlock = () => {
-		var blockNumber = this.state.blocks.length;
-		var prevHash = this.state.blocks[blockNumber-1].hash;
-		var data = this.state.blockData;
-		var time = moment();
-
-		// Contains calculated hash solution and nonce
-		var result = Utils.mineBlock(blockNumber, prevHash, data, time);
-
-		var newBlock = { 
-			blockNumber: blockNumber,
-			hash: result.hash,
-			prevHash: prevHash,
-			data: data,
-			nonce: result.nonce,
-			timestamp: time.format()
-		};
-
-		var updatedBlocks = this.state.blocks;
-		updatedBlocks.push(newBlock);
-
-		this.setState({blocks: updatedBlocks});
 	};
 
 	render() {
@@ -74,13 +29,16 @@ class App extends Component {
 					To get started, press give some data as input and hit "Mine New Block"
 				</p>
 
-				<form className="form-inline" onSubmit={e => { e.preventDefault(); this.submitBlock(); }}>
+				<form className="form-inline" onSubmit={e => { e.preventDefault(); this.refs.blockchain.submitBlock() }}>
 					<div className="form-group">
 						<input type="text" className="form-control" name="blockData" placeholder="Data" value={this.state.blockData} onChange={this.updateBlockData} />
 					</div>
-					<button className="btn btn-default" onClick={this.submitBlock} type="button">Mine New Block</button>
+					<button className="btn btn-primary" onClick={() => this.refs.blockchain.submitBlock()} type="button">
+						Mine New Block&nbsp;
+						<img src={pick} height="20" width="20" alt=""/>
+					</button>
 				</form>
-				<Blockchain blocks={this.state.blocks}/>
+				<Blockchain ref="blockchain" blockData={this.state.blockData}/>
 			</div>
 		);
 	};

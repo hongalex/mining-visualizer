@@ -52,16 +52,15 @@ export function isValidSolution(hash, difficulty)
  * @param  {Number} time - UNIX time in seconds
  * @return {Object} result - containing hash solution & nonce
  */
-export function mineBlock(blockNumber, prevHash, data, time) {
+export function mineBlock(blockNumber, prevHash, data, time, callback) {
 	var result = {}
 	
 	var nonce = conf.initialNonce;
-
 	var input;
-	
 	var hash;
+
 	do {
-		input = blockNumber.toString() + prevHash.toString() + time + data.toString() + nonce.toString();
+		input = blockNumber + prevHash + time + data + nonce;
 		hash = calculateHash(input);
 		nonce+=1;
 	} while(!isValidSolution(hash.toString(), conf.difficulty));
